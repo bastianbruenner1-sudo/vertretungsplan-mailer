@@ -2,7 +2,8 @@ name: Vertretungsplan
 
 on:
   schedule:
-    - cron: "0 16,17 * * *"
+    - cron: "0 16,18 * * *"
+      timezone: "Europe/Berlin"
   workflow_dispatch:
 
 jobs:
