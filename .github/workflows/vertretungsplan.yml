@@ -5,38 +5,13 @@ on:
     - cron: "0 16,18 * * *"
   workflow_dispatch:
 
-permissi*ns:
+permissions:
   contents: write
 
 jobs:
-  sen*-plan:
+  send-plan:
     runs-on: ubuntu-latest
-*    steps:
-      - name: Repositor* auschecken
-        uses: actions/*heckout@v4
 
-      - name: Python e*nrichten
-        uses: actions/set*p-python@v5
-        with:
-        * python-version: "3.12"
-
-      - n*me: Abhängigkeiten installieren
-  *     run: pip install -r requireme*ts.txt
-
-      - name: Script ausfü*ren
-        run: python main.py
-  *     env:
-          MAIL_USER: ${{*secrets.MAIL_USER }}
-          MAI*_PASS: ${{ secrets.MAIL_PASS }}
-
- *    - name: Änderungen committen
- *      run: |
-          git config *ser.name "github-actions[bot]"
-   *      git config user.email "41898*82+github-actions[bot]@users.norep*y.github.com"
-
-          git add **pdf
-
-          git diff --staged -*quiet || git commit -m "Update Ver*retungsplan"
-
-          git push
-`*
+    steps:
+      - name: Repository auschecken
+        uses: actions/
