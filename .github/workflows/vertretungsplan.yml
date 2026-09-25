@@ -3,23 +3,40 @@ name: Vertretungsplan
 on:
   schedule:
     - cron: "0 16,18 * * *"
-      timezone: "Europe/Berlin"
   workflow_dispatch:
 
+permissi*ns:
+  contents: write
+
 jobs:
-  send-plan:
+  sen*-plan:
     runs-on: ubuntu-latest
+*    steps:
+      - name: Repositor* auschecken
+        uses: actions/*heckout@v4
 
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
+      - name: Python e*nrichten
+        uses: actions/set*p-python@v5
         with:
-          python-version: "3.12"
+        * python-version: "3.12"
 
-      - run: pip install -r requirements.txt
+      - n*me: Abhängigkeiten installieren
+  *     run: pip install -r requireme*ts.txt
 
-      - run: python main.py
-        env:
-          MAIL_USER: ${{ secrets.MAIL_USER }}
-          MAIL_PASS: ${{ secrets.MAIL_PASS }}
+      - name: Script ausfü*ren
+        run: python main.py
+  *     env:
+          MAIL_USER: ${{*secrets.MAIL_USER }}
+          MAI*_PASS: ${{ secrets.MAIL_PASS }}
+
+ *    - name: Änderungen committen
+ *      run: |
+          git config *ser.name "github-actions[bot]"
+   *      git config user.email "41898*82+github-actions[bot]@users.norep*y.github.com"
+
+          git add **pdf
+
+          git diff --staged -*quiet || git commit -m "Update Ver*retungsplan"
+
+          git push
+`*
