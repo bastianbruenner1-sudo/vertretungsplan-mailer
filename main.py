@@ -4,9 +4,17 @@ import os
 from email.message import EmailMessage
 from datetime import datetime, timedelta
 
-# Datum für morgen
-morgen = datetime.now()
-datum = morgen.strftime("%d-%m-%Y")
+# Zieltag bestimmen
+heute = datetime.now()
+
+if heute.weekday() == 4:  # Freitag -> Montag
+    zieltag = heute + timedelta(days=3)
+elif heute.weekday() == 5:  # Samstag -> Montag
+    zieltag = heute + timedelta(days=2)
+else:  # alle anderen Tage -> nächster Tag
+    zieltag = heute + timedelta(days=1)
+
+datum = zieltag.strftime("%d-%m-%Y")
 
 # Dateiname
 pdf_name = f"vertretungen-{datum}.pdf"
@@ -33,7 +41,7 @@ github_link = (
     f"vertretungsplan-mailer/{pdf_name}"
 )
 
-# Mail erstellen
+# E-Mail erstellen
 mail = EmailMessage()
 
 mail["Subject"] = f"Vertretungsplan {datum}"
@@ -43,18 +51,4 @@ mail["To"] = "bastian_bruenner@t-online.de"
 mail.set_content(
     f"""Der aktuelle Vertretungsplan ist verfügbar:
 
-{github_link}
-
-Diese Mail wurde automatisch erstellt.
-"""
-)
-
-# Mail versenden
-with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
-    smtp.login(
-        os.getenv("MAIL_USER"),
-        os.getenv("MAIL_PASS")
-    )
-    smtp.send_message(mail)
-
-print("Mail versendet")
+{
