@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 morgen = datetime.now() + timedelta(days=1)
 datum = morgen.strftime("%d-%m-%Y")
 
-# Name der PDF auf dem FuxNoten-Server
+# Dateiname
 pdf_name = f"vertretungen-{datum}.pdf"
 
 # URL zur PDF
@@ -21,19 +21,19 @@ if r.status_code != 200:
     print("Keine PDF vorhanden.")
     quit()
 
-# PDF lokal speichern
+# PDF speichern
 with open(pdf_name, "wb") as f:
     f.write(r.content)
 
-print(f"PDF heruntergeladen: {pdf_name}")
+print(f"PDF gespeichert: {pdf_name}")
 
-# Link zu GitHub Pages
+# GitHub-Pages-Link
 github_link = (
     f"https://bastianbruenner1-sudo.github.io/"
     f"vertretungsplan-mailer/{pdf_name}"
 )
 
-# E-Mail erstellen
+# Mail erstellen
 mail = EmailMessage()
 
 mail["Subject"] = f"Vertretungsplan {datum}"
@@ -49,13 +49,12 @@ Diese Mail wurde automatisch erstellt.
 """
 )
 
-# E-Mail über Gmail versenden
+# Mail versenden
 with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
     smtp.login(
         os.getenv("MAIL_USER"),
         os.getenv("MAIL_PASS")
     )
-
     smtp.send_message(mail)
 
 print("Mail versendet")
