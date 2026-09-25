@@ -5,7 +5,7 @@ from email.message import EmailMessage
 from datetime import datetime, timedelta
 
 # Datum für morgen
-morgen = datetime.now() + timedelta(days=1)
+morgen = datetime.now()
 datum = morgen.strftime("%d-%m-%Y")
 
 # Dateiname
