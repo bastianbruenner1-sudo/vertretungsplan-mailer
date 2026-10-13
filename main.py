@@ -6,8 +6,7 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 # Zieltag bestimmen
-heute = datetime.now()
-
+heute = datetime.now(ZoneInfo("Europe/Berlin"))
 if heute.weekday() == 4:  # Freitag -> Montag
     zieltag = heute + timedelta(days=3)
 elif heute.weekday() == 5:  # Samstag -> Montag
