@@ -3,6 +3,7 @@ import smtplib
 import os
 from email.message import EmailMessage
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 # Zieltag bestimmen
 heute = datetime.now()
